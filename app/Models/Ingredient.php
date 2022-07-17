@@ -40,4 +40,9 @@ class Ingredient extends Model
     {
         return $this->belongsToMany('App\Models\Meal', 'meal_ingredients');
     }
+
+    public static function unit($unitID)
+    {
+        return DB::table('units')->find($unitID);
+    }
 }

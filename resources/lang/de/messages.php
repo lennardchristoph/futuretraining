@@ -12,10 +12,12 @@ return [
     |
     */
 
-    'Dashboard' => 'Dashboard',
-    'MyAthletes' => 'Meine Athleten',
-    'MyAthletesList' => 'Athleten Liste',
-    'MyAthletesAdd' => 'Athleten Hinzufügen',
+    'Dashboard' => [
+        'Name' => 'Dashboard',
+        'MyAthletes' => 'Meine Athleten',
+        'MyAthletesList' => 'Athleten Liste',
+        'MyAthletesAdd' => 'Athleten Hinzufügen',
+    ],
     'Name' => 'Name',
     'IngTitle' => 'Zutat hinzufügen',
     '' => '',

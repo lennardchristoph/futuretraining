@@ -12,11 +12,19 @@
         page-break-after: always;
     }
 
+    /*
+    .start-page {
+        position: relative;
+        width: 100%;
+        background-image: url('{{ asset('assets/img/pdf/background/background-image.jpg')}}');
+        background-size: cover;
+        opacity: 0.7;
+        color: white;
+    }*/
 
 </style>
 <body style="">
-<a href="{{ route('planPDF',['download'=>'pdf']) }}">Download PDF</a>
-<div class="container" style="width: 21cm; height: 29.7cm; background-color: lightgrey">
+<div class="container start-page" style="width: 21cm; height: 29.7cm;">
     <h1 class="text-center">Ernährungsplan</h1>
     <h3 class="text-center">für</h3>
     <h2 class="text-center bold">{{$athlete->surname}} {{$athlete->lastname}}</h2>
@@ -33,9 +41,9 @@
 </div>
 <div class="page-break">
 </div>
+@foreach($days as $day => $meals)
 <div class="container" style="width: 21cm; height: 29.7cm;">
-    @foreach($meals as $key => $m)
-    <h1 class="text-center">Tag 1</h1>
+    <h1 class="text-center">Tag {{$day+1}}</h1>
     <div class="table-responsive">
         <table class="table">
             <thead class="thead-dark">
@@ -48,157 +56,49 @@
                 <th scope="col" class="sort text-right">Menge [g]</th>
             </tr>
             </thead>
+            @foreach($meals as $meal)
             <thead class="thead-light">
             <tr>
-                <th scope="col" class="sort">Frühstück - Nudeln mit Tomatensauce</th>
-                <th scope="col" class="sort text-underline">400</th>
-                <th scope="col" class="sort text-underline">400</th>
-                <th scope="col" class="sort text-underline">400</th>
-                <th scope="col" class="sort text-underline">400</th>
+                <th scope="col" class="sort">@if($meal['daytime'] == 'am')Frühstück @elseif($meal['daytime'] == 'an')Mittag @elseif($meal['daytime'] =='ev')Abendessen @endif - {{$meal[$locale.'_title']}}</th>
+                <th scope="col" class="sort text-underline"><u>{{$meal[1][0]}}</u></th>
+                <th scope="col" class="sort text-underline"><u>{{$meal[1][1]}}</u></th>
+                <th scope="col" class="sort text-underline"><u>{{$meal[1][2]}}</u></th>
+                <th scope="col" class="sort text-underline"><u>{{$meal[1][3]}}</u></th>
                 <th scope="col" class="sort text-right"></th>
             </tr>
             </thead>
             <tbody class="list">
+            @foreach($meal[0] as $ing)
             <tr>
-                <th scope="col" class="sort">Nudeln</th>
-                <th scope="col" class="sort">200</th>
-                <th scope="col" class="sort">200</th>
-                <th scope="col" class="sort">200</th>
-                <th scope="col" class="sort">200</th>
-                <th scope="col" class="sort">200</th>
+                <th scope="col" class="sort">{{$ing->$localeName}}</th>
+                <th scope="col" class="sort">{{$ing->kcal}}</th>
+                <th scope="col" class="sort">{{$ing->carbs}}</th>
+                <th scope="col" class="sort">{{$ing->protein}}</th>
+                <th scope="col" class="sort">{{$ing->fat}}</th>
+                <th scope="col" class="sort text-right">{{$ing->final_amount}}</th>
             </tr>
-            <tr>
-                <th scope="col" class="sort">Tomatensauce</th>
-                <th scope="col" class="sort">200</th>
-                <th scope="col" class="sort">200</th>
-                <th scope="col" class="sort">200</th>
-                <th scope="col" class="sort">200</th>
-                <th scope="col" class="sort">150</th>
-            </tr>
+            @endforeach
             </tbody>
+            @endforeach
         </table>
     </div>
-    @endforeach
 </div>
-
 <div class="page-break">
 </div>
-<div class="container" style="width: 21cm; height: 29.7cm;">
-    <h1 class="text-center">Tag 1</h1>
-    <div class="table-responsive">
-        <table class="table">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col" class="sort">Mahlzeit</th>
-                <th scope="col" class="sort">KCAL</th>
-                <th scope="col" class="sort">Carbs</th>
-                <th scope="col" class="sort">Protein</th>
-                <th scope="col" class="sort">Fat</th>
-                <th scope="col" class="sort text-right">Menge [g]</th>
-            </tr>
-            </thead>
-            <thead class="thead-light">
-            <tr>
-                <th scope="col" class="sort">Frühstück - Nudeln mit Tomatensauce</th>
-                <th scope="col" class="sort text-underline">400</th>
-                <th scope="col" class="sort text-underline">400</th>
-                <th scope="col" class="sort text-underline">400</th>
-                <th scope="col" class="sort text-underline">400</th>
-                <th scope="col" class="sort text-right"></th>
-            </tr>
-            </thead>
-            <tbody class="list">
-                <tr>
-                    <th scope="col" class="sort">Nudeln</th>
-                    <th scope="col" class="sort">200</th>
-                    <th scope="col" class="sort">200</th>
-                    <th scope="col" class="sort">200</th>
-                    <th scope="col" class="sort">200</th>
-                    <th scope="col" class="sort">200</th>
-                </tr>
-                <tr>
-                    <th scope="col" class="sort">Tomatensauce</th>
-                    <th scope="col" class="sort">200</th>
-                    <th scope="col" class="sort">200</th>
-                    <th scope="col" class="sort">200</th>
-                    <th scope="col" class="sort">200</th>
-                    <th scope="col" class="sort">150</th>
-                </tr>
-            </tbody>
-            <thead class="thead-light">
-            <tr>
-                <th scope="col" class="sort">Mittagessen - Nudeln mit Tomatensauce</th>
-                <th scope="col" class="sort"></th>
-                <th scope="col" class="sort"></th>
-                <th scope="col" class="sort"></th>
-                <th scope="col" class="sort"></th>
-                <th scope="col" class="sort text-right"></th>
-            </tr>
-            </thead>
-            <tbody class="list">
-            <tr>
-                <th scope="col" class="sort">Nudeln</th>
-                <th scope="col" class="sort">200</th>
-                <th scope="col" class="sort">200</th>
-                <th scope="col" class="sort">200</th>
-                <th scope="col" class="sort">200</th>
-                <th scope="col" class="sort">200</th>
-            </tr>
-            <tr>
-                <th scope="col" class="sort">Tomatensauce</th>
-                <th scope="col" class="sort">200</th>
-                <th scope="col" class="sort">200</th>
-                <th scope="col" class="sort">200</th>
-                <th scope="col" class="sort">200</th>
-                <th scope="col" class="sort">150</th>
-            </tr>
-            </tbody>
-            <thead class="thead-light">
-            <tr>
-                <th scope="col" class="sort">Mittagessen - Nudeln mit Tomatensauce</th>
-                <th scope="col" class="sort"></th>
-                <th scope="col" class="sort"></th>
-                <th scope="col" class="sort"></th>
-                <th scope="col" class="sort"></th>
-                <th scope="col" class="sort text-right"></th>
-            </tr>
-            </thead>
-            <tbody class="list">
-            <tr>
-                <th scope="col" class="sort">Nudeln</th>
-                <th scope="col" class="sort">200</th>
-                <th scope="col" class="sort">200</th>
-                <th scope="col" class="sort">200</th>
-                <th scope="col" class="sort">200</th>
-                <th scope="col" class="sort">200</th>
-            </tr>
-            <tr>
-                <th scope="col" class="sort">Tomatensauce</th>
-                <th scope="col" class="sort">200</th>
-                <th scope="col" class="sort">200</th>
-                <th scope="col" class="sort">200</th>
-                <th scope="col" class="sort">200</th>
-                <th scope="col" class="sort">150</th>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+@endforeach
 
 <div class="page-break">
 </div>
 <div class="container" style="width: 21cm; height: 29.7cm;">
     <h1 class="mb-4 text-center">Einkaufsliste</h1>
     <ul class="list-group">
+        @foreach($ingredients as $ing)
         <li class="list-group-item d-flex justify-content-between align-items-center">
-            Cras justo odio
+                <div class="pull-left">{{$ing->$localeName}}</div>
+                <div class="pull-right">{{$ing->final_amount}} {{App\Models\Ingredient::unit($ing->unit)->short}}</div>
         </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            Dapibus ac facilisis in
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            Morbi leo risus
-        </li>
+        @endforeach
+
     </ul>
 </div>
 

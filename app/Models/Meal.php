@@ -30,6 +30,14 @@ class Meal extends Model
                 static::where('de_title', 'like', '%'.$search.'%');
     }
 
+    public static function planIngredients($mealID)
+    {
+        return DB::table('plan_meal_ingredients')->where('plan_meal_ingredients.plan_meal_id', $mealID)
+            ->join('ingredients', 'ingredients.id', '=', 'plan_meal_ingredients.ingredient_id')
+            ->select('ingredients.id', 'plan_meal_ingredients.plan_meal_id', 'plan_meal_ingredients.final_amount', 'plan_meal_ingredients.unit', 'ingredients.de_name', 'ingredients.en_name', 'ingredients.fr_name', 'ingredients.es_name' , 'ingredients.kcal', 'ingredients.carbs', 'ingredients.protein', 'ingredients.fat')
+            ->get()->toArray();
+    }
+
 
     public function plan(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {

@@ -43,15 +43,15 @@
                                 <td class="">{{$plan->comment}}</td>
                                 <td class="">{{$plan->start_date}}</td>
                                 <td class="">{{$plan->end_date}}</td>
-                                <td class="text-right">
+                                <td class="">
                                     <div class="dropdown">
                                         <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fas fa-ellipsis-v"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <a class="dropdown-item" href="#">Something else here</a>
+                                            <a class="dropdown-item" target="_blank" href="{{ route('planPDF', ['planID' => $plan->id]) }}">Open as PDF</a>
+                                            <a class="dropdown-item" href="{{ route('planPDF', ['download' => 'pdf', 'planID' => $plan->id]) }}">Download as PDF</a>
+                                            <a class="dropdown-item" href="#">Send via Mail</a>
                                         </div>
                                     </div>
                                 </td>
